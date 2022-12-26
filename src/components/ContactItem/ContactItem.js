@@ -1,13 +1,15 @@
+import { useDeleteContactMutation } from '../../redux/contactSlice';
 import PropTypes from 'prop-types';
 import { Item, Btn } from './ContactItem.Styled';
-import { deleteContact } from 'redux/actions';
-import { useDispatch } from 'react-redux';
+// import { deleteContact } from 'redux/actions';
+// import { useDispatch } from 'react-redux';
 
 const ContactItem = ({ contact }) => {
-  const dispatch = useDispatch();
-  const deleteContactById = contactId => {
-    dispatch(deleteContact(contactId));
-  };
+  const [deleteContact, { isLoading }] = useDeleteContactMutation();
+  // const dispatch = useDispatch();
+  // const deleteContactById = contactId => {
+  //   dispatch(deleteContact(contactId));
+  // };
 
   const { name, number, id } = contact;
       return (
@@ -17,7 +19,8 @@ const ContactItem = ({ contact }) => {
           </span>
           <Btn
             type="button"
-            onClick={() => deleteContactById(id)}
+            onClick={() => deleteContact(id)}
+            disabled={isLoading}
           >
             x
           </Btn>
